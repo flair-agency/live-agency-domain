@@ -1,0 +1,17 @@
+name: Architecture Gate
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  architecture-gate:
+    if: github.event.pull_request.draft == false && github.event.pull_request.head.repo.full_name == github.repository
+    permissions:
+      contents: read
+      pull-requests: write
+    uses: flair-agency/architecture-gatekeeper/.github/workflows/architecture-gate-consumer.yml@c6c45da24d755ddd51b3a595e614242f869ec3ad
+    with:
+      protected-review-instructions: true
+    secrets:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}

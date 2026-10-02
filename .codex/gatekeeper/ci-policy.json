@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "default": {
+    "mode": "local-only"
+  },
+  "branches": {
+    "main": {
+      "mode": "enforced",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "authorityFiles": [
+        "docs/domain/contexts.md",
+        "docs/architecture/ownership.md",
+        "docs/governance/contributing.md"
+      ],
+      "promptPath": ".codex/gatekeeper/ci-prompt.md",
+      "schemaPath": ".codex/gatekeeper/decision.schema.json",
+      "validationPath": null
+    }
+  }
+}
