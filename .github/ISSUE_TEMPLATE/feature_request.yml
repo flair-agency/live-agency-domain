@@ -1,0 +1,54 @@
+name: Feature request
+description: Propose a focused improvement to the LIVE Agency Domain source or workflows
+title: "Feature: "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A feature proposal does not adopt a business contract, select a production environment, authorize service access, or establish a release commitment. Use publishable inputs only.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Describe the user problem and context. Keep platform interpretation and company mappings with their owners.
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Proposed outcome
+      description: State the observable user-facing result without assuming new trust, adoption, or acceptance guarantees.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: State what is in scope and out of scope, including affected workflow stages.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance_verification
+    attributes:
+      label: Acceptance and verification criteria
+      description: List separate observable criteria. For each, state how completion will be verified and the relevant verification scope.
+      placeholder: |
+        - [ ] Observable criterion — verify by ... (scope: ...)
+        - [ ] Observable criterion — verify by ... (scope: ...)
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and related work
+      description: Link existing issues or state that none are known. Do not invent owner-decision issues.
+  - type: textarea
+    id: assumptions
+    attributes:
+      label: Assumptions, unknowns, and owner decisions
+      description: Separate observed facts from assumptions and unknowns. Link a real canonical owner decision or issue if one exists; do not resolve one here.
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered

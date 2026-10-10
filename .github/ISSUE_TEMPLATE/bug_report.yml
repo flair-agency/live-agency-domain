@@ -1,0 +1,72 @@
+name: Bug report
+description: Report a reproducible defect in LIVE Agency Domain source or workflow
+title: "Bug: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not report vulnerabilities here. Follow SECURITY.md instead. Do not include private source evidence, credentials, or personal data.
+  - type: input
+    id: version
+    attributes:
+      label: Release or commit
+      description: Provide the exact release tag or immutable full commit SHA where the problem occurred.
+      placeholder: A full commit SHA
+    validations:
+      required: true
+  - type: dropdown
+    id: route
+    attributes:
+      label: Affected route
+      options:
+        - Creator Scouting
+        - Creator Management
+        - Expense/Accounting
+        - Architecture or capability contracts
+        - Public source checks
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: State what is broken and who or which supported path is affected.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Provide the smallest safe steps, inputs and observed output. Use synthetic publishable inputs. Remove private source evidence and credentials.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior and outcome
+      description: Describe the observable behavior that would resolve this report.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance_verification
+    attributes:
+      label: Acceptance and verification criteria
+      description: List separate observable criteria and how each can be verified.
+      placeholder: |
+        - [ ] Observable criterion — verify by ...
+        - [ ] Observable criterion — verify by ...
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and related work
+      description: Link existing issues or state that none are known. Do not invent owner-decision issues.
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Remove credentials, private repository content, owner evidence and personal data.
