@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security guidance
+    url: https://github.com/flair-agency/live-agency-domain/blob/main/SECURITY.md
+    about: Read the reporting limitations before sharing security details. Do not report vulnerabilities in a public issue.
