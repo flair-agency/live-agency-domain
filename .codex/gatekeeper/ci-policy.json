@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 4,
   "default": {
     "mode": "local-only"
   },
@@ -8,14 +8,22 @@
       "mode": "enforced",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "medium",
-      "authorityFiles": [
-        "docs/domain/contexts.md",
-        "docs/architecture/ownership.md",
-        "docs/governance/contributing.md"
-      ],
-      "promptPath": ".codex/gatekeeper/ci-prompt.md",
-      "schemaPath": ".codex/gatekeeper/decision.schema.json",
-      "validationPath": null
+      "authorityManifestPath": ".codex/gatekeeper/authorities.json",
+      "authorityLimits": {
+        "maxManifestBytes": 16384,
+        "maxMembers": 3,
+        "maxFileBytes": 131072,
+        "maxTotalBytes": 262144,
+        "maxPromptBytes": 524288
+      },
+      "ownerAddition": {
+        "version": 2,
+        "grade": "G0",
+        "authorityId": "contributor-guidance",
+        "authorityPath": "docs/governance/contributing.md",
+        "promptPath": ".codex/gatekeeper/owner-addition.md",
+        "schemaPath": ".codex/gatekeeper/owner-addition.schema.json"
+      }
     }
   }
 }
