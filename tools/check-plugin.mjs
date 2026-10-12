@@ -1,8 +1,9 @@
 import assert from 'node:assert/strict';
-import { copyFileSync, existsSync, lstatSync, readFileSync, readdirSync } from 'node:fs';
+import { copyFileSync, existsSync, lstatSync, readFileSync, readdirSync, realpathSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
+import { assertSafePath, assertTreeWithoutSymlinks, isWithin } from './plugin-paths.mjs';
 
-const root = process.cwd();
+const root = realpathSync(process.cwd());
 const plugin = join(root, 'plugins/live-agency-domain');
 const skill = join(plugin, 'skills/domain-guide');
 const copies = [
@@ -13,6 +14,13 @@ const copies = [
 assert(process.argv.length === 2 || (process.argv.length === 3 && process.argv[2] === '--sync'), 'Use check-plugin.mjs [--sync]');
 if (process.argv[2] === '--sync') {
   const { mkdirSync } = await import('node:fs');
+  assertSafePath(root, plugin, { allowMissing: true, directory: true });
+  assertTreeWithoutSymlinks(plugin);
+  // Validate every source and destination before the first filesystem mutation.
+  for (const [source, target] of copies) {
+    assertSafePath(root, join(root, source));
+    assertSafePath(root, join(plugin, target), { allowMissing: true });
+  }
   for (const [source, target] of copies) {
     mkdirSync(dirname(join(plugin, target)), { recursive: true });
     copyFileSync(join(root, source), join(plugin, target));
@@ -58,7 +66,7 @@ function inspect(directory, prefix = '') {
           const target = match[1];
           if (/^https?:/.test(target)) continue;
           const resolved = resolve(dirname(file), target);
-          assert(resolved.startsWith(plugin + '/'), `Reference escapes plugin: ${target}`);
+          assert(isWithin(plugin, resolved), `Reference escapes plugin: ${target}`);
           assert(existsSync(resolved), `Missing packaged reference: ${target}`);
         }
       }
