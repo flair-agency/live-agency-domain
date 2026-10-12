@@ -2,17 +2,19 @@ import assert from 'node:assert/strict';
 import { cpSync, existsSync, linkSync, mkdtempSync, mkdirSync, readFileSync, realpathSync, renameSync, rmSync, symlinkSync, unlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { spawnSync } from 'node:child_process';
+import { execFileSync, spawnSync, type SpawnSyncReturns } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { test } from 'node:test';
-import { isWithin } from './plugin-paths.mjs';
+import { test, type TestContext } from 'node:test';
+import { isWithin } from './plugin-paths.mts';
 
 const source = fileURLToPath(new URL('../', import.meta.url));
 const relativePlugin = 'plugins/live-agency-domain';
 const contexts = relativePlugin + '/skills/domain-guide/references/contexts.md';
 const ownership = relativePlugin + '/skills/domain-guide/references/ownership.md';
 
-function fixture(t) {
+type Fixture = { root: string; temporary: string; run: (sync?: boolean) => SpawnSyncReturns<string> };
+
+function fixture(t: TestContext): Fixture {
   const temporary = realpathSync(mkdtempSync(path.join(tmpdir(), 'live-agency-plugin-test-')));
   t.after(() => rmSync(temporary, { recursive: true, force: true }));
   const root = path.join(temporary, 'repo');
@@ -20,7 +22,7 @@ function fixture(t) {
   for (const name of ['tools', 'docs', 'plugins', '.agents', 'LICENSE']) {
     cpSync(path.join(source, name), path.join(root, name), { recursive: true });
   }
-  const run = (sync = false) => spawnSync(process.execPath, ['tools/check-plugin.mjs', ...(sync ? ['--sync'] : [])], { cwd: root, encoding: 'utf8' });
+  const run = (sync = false) => spawnSync(process.execPath, ['tools/check-plugin.mts', ...(sync ? ['--sync'] : [])], { cwd: root, encoding: 'utf8' });
   return { root, temporary, run };
 }
 
@@ -124,11 +126,12 @@ test('unexpected payload and escaping references are rejected', (t) => {
   assert.match(result.stderr, /Reference escapes plugin/);
 });
 
-for (const [name, paths, root] of [
+const pathCases: Array<[name: string, paths: typeof path, root: string]> = [
   ['POSIX', path.posix, '/repo/plugin'],
   ['Windows drive', path.win32, 'C:\\repo\\plugin'],
   ['Windows UNC', path.win32, '\\\\server\\share\\repo\\plugin'],
-]) {
+];
+for (const [name, paths, root] of pathCases) {
   test(`${name} containment accepts children and rejects parent/sibling escapes`, () => {
     assert(isWithin(root, paths.resolve(root, 'skills/domain-guide/references/contexts.md'), paths));
     assert(!isWithin(root, paths.resolve(root, '../outside.md'), paths));
@@ -136,3 +139,18 @@ for (const [name, paths, root] of [
     if (paths === path.win32) assert(!isWithin(root, 'D:\\outside.md', paths));
   });
 }
+
+test('public source ignores untracked dev dependencies but rejects tracked ones', (t) => {
+  const { root } = fixture(t);
+  execFileSync('git', ['init', '--quiet', root]);
+  execFileSync('git', ['-C', root, 'add', '.']);
+  const modules = path.join(root, 'node_modules');
+  mkdirSync(modules);
+  writeFileSync(path.join(modules, 'generated.txt'), 'development dependency\n');
+  const run = () => spawnSync(process.execPath, ['tools/check-public-tree.mts'], { cwd: root, encoding: 'utf8' });
+  assert.equal(run().status, 0);
+  execFileSync('git', ['-C', root, 'add', '-f', 'node_modules/generated.txt']);
+  const result = run();
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /tracks development node_modules/);
+});

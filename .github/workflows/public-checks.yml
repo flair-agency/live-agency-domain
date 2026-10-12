@@ -22,12 +22,20 @@ jobs:
             "https://github.com/${GITHUB_REPOSITORY}.git" "${GITHUB_REF}"
           git checkout --detach FETCH_HEAD
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+      - name: Use the selected native TypeScript runtime
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22.22.0'
+      - name: Install locked type-check tools without lifecycle scripts
+        run: npm ci --ignore-scripts --registry=https://registry.npmjs.org --userconfig=/dev/null
+      - name: Type-check all native TypeScript tools without emitting code
+        run: npm run typecheck
       - name: Check public source structure and links
-        run: node tools/check-public-tree.mjs
+        run: node tools/check-public-tree.mts
       - name: Check public knowledge plugin and packaged references
-        run: node tools/check-plugin.mjs
+        run: node tools/check-plugin.mts
       - name: Verify plugin sync safety and path containment regressions
-        run: node --test tools/check-plugin.test.mjs
+        run: node --test tools/check-plugin.test.mts
 
   source-windows:
     runs-on: windows-latest
@@ -46,8 +54,16 @@ jobs:
             "https://github.com/${GITHUB_REPOSITORY}.git" "${GITHUB_REF}"
           git checkout --detach FETCH_HEAD
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+      - name: Use the selected native TypeScript runtime
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22.22.0'
+      - name: Install locked type-check tools without lifecycle scripts
+        run: npm ci --ignore-scripts --registry=https://registry.npmjs.org --userconfig=/dev/null
+      - name: Type-check all native TypeScript tools without emitting code
+        run: npm run typecheck
       - name: Check public source and plugin on Windows
         run: |
-          node tools/check-public-tree.mjs
-          node tools/check-plugin.mjs
-          node --test --test-name-pattern 'clean payload|containment|hard-linked' tools/check-plugin.test.mjs
+          node tools/check-public-tree.mts
+          node tools/check-plugin.mts
+          node --test --test-name-pattern 'clean payload|containment|hard-linked' tools/check-plugin.test.mts
