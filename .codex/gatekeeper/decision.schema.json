@@ -12,7 +12,10 @@
     "qualityGuarantees",
     "reviewedScope",
     "prohibitedChanges",
-    "gates"
+    "gates",
+    "authorityIds",
+    "authoritySetDigest",
+    "ownerDecisionId"
   ],
   "properties": {
     "decision": { "enum": ["PASS", "BLOCK", "OWNER_DECISION"] },
@@ -24,6 +27,9 @@
     "qualityGuarantees": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
     "reviewedScope": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
     "prohibitedChanges": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "authorityIds": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "authoritySetDigest": { "type": "string" },
+    "ownerDecisionId": { "type": "string" },
     "gates": {
       "type": "object",
       "additionalProperties": false,
