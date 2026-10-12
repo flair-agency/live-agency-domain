@@ -1,0 +1,12 @@
+{
+  "name": "live-agency-public",
+  "interface": { "displayName": "LIVE Agency Public" },
+  "plugins": [
+    {
+      "name": "live-agency-domain",
+      "source": { "source": "local", "path": "./plugins/live-agency-domain" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Productivity"
+    }
+  ]
+}
