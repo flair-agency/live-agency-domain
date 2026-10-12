@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "authorities": [
+    {
+      "id": "public-business-contexts",
+      "repository": "self",
+      "revision": "authority-revision",
+      "path": "docs/domain/contexts.md"
+    },
+    {
+      "id": "knowledge-implementation-ownership",
+      "repository": "self",
+      "revision": "authority-revision",
+      "path": "docs/architecture/ownership.md"
+    },
+    {
+      "id": "contributor-guidance",
+      "repository": "self",
+      "revision": "authority-revision",
+      "path": "docs/governance/contributing.md"
+    }
+  ]
+}
