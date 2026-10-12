@@ -24,7 +24,23 @@ codex plugin list --marketplace live-agency-public --available --json
 
 CLI marketplace setup and CLI installation are separate from actual ChatGPT Work loading. In the ChatGPT desktop app's Plugins Directory, select **LIVE Agency Public**, install **LIVE Agency Domain**, and open a fresh local Work chat. Where a client offers CLI installation, `codex plugin add live-agency-domain@live-agency-public --json` can test that interface; it does not prove Work discovery.
 
-The documented local source cache generation is `live-agency-public/live-agency-domain/local`, so the manifest's semantic version alone does not identify its bytes. Verify the resolved marketplace commit and installed cache hashes against the selected commit. A reinstall from changed local contents can replace that cache generation. Preserve existing marketplace configuration and unrelated plugin state; do not overwrite a personal marketplace catalog. If a host needs restart or permission, record that exact gate before proceeding.
+Local/repository marketplaces are authoring, testing and team-distribution sources; their availability can vary by host surface. They are separate from publication to the universal public Plugins Directory. If the configured marketplace is absent in Work, record the exact surface and stop that acceptance step. The [official repo-scoped procedure](https://developers.openai.com/plugins/build/plugins) uses this repository's `.agents/plugins/marketplace.json` and a desktop-app restart. Do not overwrite a personal catalog, change trust or permissions, or publish to a workspace to work around an unavailable interface.
+
+Use the cache path returned by the tested host rather than assuming a generation named `local`. The CLI observation below returned the semantic-version generation `0.1.0`; neither a directory name nor the manifest version identifies its bytes. Verify the resolved marketplace commit and installed cache hashes against the selected commit. A reinstall can replace that cache generation. Preserve existing marketplace configuration and unrelated plugin state. If a host needs restart or permission, record that exact gate before proceeding.
+
+### Fixed source checkpoint and observed limits
+
+The next manual Work test selects public main commit `0387aad6da7c824a08a8a79664f2e549e58a6cad`, `live-agency-domain@0.1.0`, and marketplace `live-agency-public`. This is a test selection, not a new release. At this checkpoint all five plugin files are byte-identical to the earlier CLI-tested commit `0802ee2181280e205c10ff5aa273bb1d67f22774`.
+
+| Plugin-relative path | SHA-256 |
+| --- | --- |
+| `LICENSE` | `7c49d59dc268bcc5fbe64321a8beda7006a76fa3ce63480e0a20c2f3b050324e` |
+| `plugin.json` | `01f6f161b3ef181391436567a9a6027a88e267559abe9b5df3611d79c177d532` |
+| `skills/domain-guide/SKILL.md` | `f625c6755cbd71e7216b21e4927af1556eacf6a0ac93640ba66f620e61da6a50` |
+| `skills/domain-guide/references/contexts.md` | `949912e815cf931acb83b023887d09d2ed07f318544cfa075e92eda1a94aedbc` |
+| `skills/domain-guide/references/ownership.md` | `b6058597ecb46ea8ee7138f2970cecf2d8ca5044531078911ab36c6662792333` |
+
+On 2026-10-12, Codex CLI `0.162.0` installed the earlier fixed commit through its supported marketplace/plugin commands. Its returned cache was `~/.codex/plugins/cache/live-agency-public/live-agency-domain/0.1.0`; all five hashes matched and both reference files were readable. Supported removal restored the saved user configuration and marketplace bytes, and the test cache was absent. These are historical CLI installation and filesystem observations. The current commit's bytes were checked again without installing it. Actual ChatGPT Work discovery, Skill invocation, model reference reading, answer/readback and host removal remain unrun. A historical desktop-app bundle version does not establish the running host version; capture that version during the manual test.
 
 ## Host acceptance and recovery
 
