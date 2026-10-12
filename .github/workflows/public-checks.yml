@@ -24,3 +24,5 @@ jobs:
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
       - name: Check public source structure and links
         run: node tools/check-public-tree.mjs
+      - name: Check public knowledge plugin and packaged references
+        run: node tools/check-plugin.mjs

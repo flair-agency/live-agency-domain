@@ -7,3 +7,5 @@ Creator Scouting, Creator Management, and Expense/Accounting have separate busin
 The public checkout is designed to work without private sibling source repositories or Gitlinks. A repository file or installed tool does not select an operational environment, credentials, target, or permission to act. Such choices belong to a separately reviewed composition and workflow.
 
 Read [contributor guidance](docs/governance/contributing.md) and [agent instructions](AGENTS.md) before changing this source. New content requires its own ownership and disclosure review.
+
+The [public knowledge plugin](docs/architecture/plugin-distribution.md) packages the existing concepts and ownership references for host discovery. Run `node tools/check-plugin.mjs` and `node tools/check-public-tree.mjs` to verify its source. Installation and host verification remain distinct from business execution authority.

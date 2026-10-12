@@ -1,0 +1,21 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "live-agency-domain",
+  "version": "0.1.0",
+  "description": "Read public LIVE agency business contexts and knowledge ownership.",
+  "author": { "name": "Flair", "url": "https://github.com/flair-agency" },
+  "repository": "https://github.com/flair-agency/live-agency-domain",
+  "license": "MIT",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "LIVE Agency Domain",
+        "shortDescription": "Explain public agency concepts and ownership",
+        "developerName": "Flair",
+        "category": "Productivity",
+        "capabilities": ["Read"],
+        "defaultPrompt": ["Explain LIVE agency business contexts and where private mappings belong."]
+      }
+    }
+  }
+}
