@@ -50,4 +50,4 @@ jobs:
         run: |
           node tools/check-public-tree.mjs
           node tools/check-plugin.mjs
-          node --test --test-name-pattern 'clean payload|containment' tools/check-plugin.test.mjs
+          node --test --test-name-pattern 'clean payload|containment|hard-linked' tools/check-plugin.test.mjs

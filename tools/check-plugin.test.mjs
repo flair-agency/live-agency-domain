@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { cpSync, existsSync, mkdtempSync, mkdirSync, readFileSync, realpathSync, renameSync, rmSync, symlinkSync, unlinkSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, linkSync, mkdtempSync, mkdirSync, readFileSync, realpathSync, renameSync, rmSync, symlinkSync, unlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -46,6 +46,22 @@ test('later symlink target stops sync before creating an earlier missing file', 
   assert.match(result.stderr, /Symlink/);
   assert.equal(readFileSync(sentinel, 'utf8'), 'outside content\n');
   assert.equal(existsSync(path.join(root, contexts)), false);
+});
+
+test('hard-linked later destination stops sync before mutating any file', (t) => {
+  const { root, temporary, run } = fixture(t);
+  const sentinel = path.join(temporary, 'sentinel');
+  const target = path.join(root, relativePlugin, 'LICENSE');
+  writeFileSync(sentinel, 'outside content\n');
+  unlinkSync(target);
+  linkSync(sentinel, target);
+  writeFileSync(path.join(root, contexts), 'stale copy\n');
+  const result = run(true);
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /Hard-linked sync destination/);
+  assert.equal(readFileSync(sentinel, 'utf8'), 'outside content\n');
+  assert.equal(readFileSync(target, 'utf8'), 'outside content\n');
+  assert.equal(readFileSync(path.join(root, contexts), 'utf8'), 'stale copy\n');
 });
 
 for (const relative of ['plugins', relativePlugin + '/skills/domain-guide/references']) {

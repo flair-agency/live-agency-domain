@@ -9,7 +9,7 @@ export function isWithin(root, target, paths = path) {
 
 // Inspect each existing component, including dangling links. Missing destinations
 // are allowed, but no directory creation or file copy happens during preflight.
-export function assertSafePath(root, target, { allowMissing = false, directory = false } = {}) {
+export function assertSafePath(root, target, { allowMissing = false, directory = false, singleLink = false } = {}) {
   assert(isWithin(root, target), `Path escapes source root: ${target}`);
   const parts = path.relative(root, target).split(path.sep).filter(Boolean);
   let current = root;
@@ -26,6 +26,9 @@ export function assertSafePath(root, target, { allowMissing = false, directory =
     assert(isWithin(root, realpathSync(current)), `Resolved path escapes source root: ${current}`);
     const needsDirectory = index < parts.length - 1 || directory;
     assert(needsDirectory ? stat.isDirectory() : stat.isFile(), `Invalid sync path type: ${current}`);
+    if (!needsDirectory && singleLink) {
+      assert.equal(stat.nlink, 1, `Hard-linked sync destination: ${current}`);
+    }
   }
 }
 

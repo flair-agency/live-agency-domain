@@ -19,7 +19,7 @@ if (process.argv[2] === '--sync') {
   // Validate every source and destination before the first filesystem mutation.
   for (const [source, target] of copies) {
     assertSafePath(root, join(root, source));
-    assertSafePath(root, join(plugin, target), { allowMissing: true });
+    assertSafePath(root, join(plugin, target), { allowMissing: true, singleLink: true });
   }
   for (const [source, target] of copies) {
     mkdirSync(dirname(join(plugin, target)), { recursive: true });
