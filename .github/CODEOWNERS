@@ -1,0 +1,16 @@
+# Default implementation ownership, using existing repository maintainers.
+* @flair-agency/engineering
+
+# Public concepts, ownership policy, and contributor guidance.
+/AGENTS.md @flair-agency/architecture @flair-agency/engineering
+/README.md @flair-agency/architecture @flair-agency/engineering
+/CONTRIBUTING.md @flair-agency/architecture @flair-agency/engineering
+/CODE_OF_CONDUCT.md @flair-agency/architecture @flair-agency/engineering
+/SUPPORT.md @flair-agency/architecture @flair-agency/engineering
+/docs/ @flair-agency/architecture @flair-agency/engineering
+/.codex/gatekeeper/ @flair-agency/architecture
+
+# Security policy, automation, and this ownership file.
+/SECURITY.md @flair-agency/security @flair-agency/architecture
+/.github/ @flair-agency/security @flair-agency/architecture
+/.github/CODEOWNERS @flair-agency/security @flair-agency/architecture
