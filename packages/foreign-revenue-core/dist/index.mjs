@@ -130,7 +130,7 @@ export function buildPlan(operation, payload) {
             const validHost = isIP(literal) !== 0 || (dns.length <= 253 && dns.split('.').every(label => /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/i.test(label)));
             if (!validHost)
                 throw new Error();
-            if (!/^https:\/\/[^/?#@\\]+(?:[/?#]|$)/i.test(sourceUrl) || url.protocol !== 'https:' || !url.hostname || url.username || url.password || /[\u0000-\u0020\u007f\p{White_Space}\uFEFF]/u.test(sourceUrl))
+            if (!/^https:\/\/[^/?#@\\]+(?:[/?#]|$)/i.test(sourceUrl) || sourceUrl.includes('\\') || url.protocol !== 'https:' || !url.hostname || url.username || url.password || /[\u0000-\u0020\u007f\p{White_Space}\uFEFF]/u.test(sourceUrl))
                 throw new Error();
         }
         catch {

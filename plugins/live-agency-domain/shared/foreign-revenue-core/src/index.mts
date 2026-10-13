@@ -105,7 +105,7 @@ export function buildPlan(operation: string, payload: unknown): PlanResult {
       const dns = host.endsWith('.') ? host.slice(0, -1) : host;
       const validHost = isIP(literal) !== 0 || (dns.length <= 253 && dns.split('.').every(label => /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/i.test(label)));
       if (!validHost) throw new Error();
-      if (!/^https:\/\/[^/?#@\\]+(?:[/?#]|$)/i.test(sourceUrl) || url.protocol !== 'https:' || !url.hostname || url.username || url.password || /[\u0000-\u0020\u007f\p{White_Space}\uFEFF]/u.test(sourceUrl)) throw new Error();
+      if (!/^https:\/\/[^/?#@\\]+(?:[/?#]|$)/i.test(sourceUrl) || sourceUrl.includes('\\') || url.protocol !== 'https:' || !url.hostname || url.username || url.password || /[\u0000-\u0020\u007f\p{White_Space}\uFEFF]/u.test(sourceUrl)) throw new Error();
     } catch { throw new Error('fx_rate.source_url must be a valid HTTPS URL with a host'); }
     if (!boolean(fx.source_verified, 'fx_rate.source_verified')) issues.push('official rate source was not verified');
     if (!boolean(fx.policy_date_verified, 'fx_rate.policy_date_verified')) issues.push('rate date was not verified against the month-end policy');

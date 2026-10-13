@@ -108,6 +108,11 @@ for (const scheme of ['HTTPS', 'hTtPs']) test(`valid ${scheme} scheme preserves 
  if (result.status==='ready') assert.equal(object(result.plan.rate).source_url,scheme+'://example.invalid/rate');
 });
 
+for (const url of ['https://example.invalid/a\\b','https://example.invalid/?a\\b','https://example.invalid/#a\\b']) test(`literal backslash stops in source evidence ${url}`,()=>{
+ const x=input('recognition'); object(x.fx_rate).source_url=url;
+ assert.equal(buildPlan('recognition',x).status,'invalid');
+});
+
 test('raw URL controls cannot silently become a different provenance URL', () => {
  const x=input('recognition'); object(x.fx_rate).source_url='https://example.invalid/a\u0000b';
  assert.equal(buildPlan('recognition',x).status,'invalid');
