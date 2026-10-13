@@ -11,7 +11,7 @@ export function checkRecognitionRuntime(root: string): void {
         if (item.isDirectory()) visit(path);
         else {
           assert(!/\.(?:py|pyc|pyo|sh)$/.test(item.name), `Additional runtime file: ${path}`);
-          if (/\.(?:mts|mjs|json)$/.test(item.name)) {
+          if (/\.(?:mts|cts|ts|tsx|mjs|cjs|js|jsx|json)$/.test(item.name)) {
             assert(!/\bpython(?:3)?\b|plan_foreign_revenue\.py/.test(readFileSync(path, 'utf8')), `Additional runtime invocation/dependency: ${path}`);
           }
         }

@@ -15,3 +15,13 @@ test('scoped distribution check rejects an extra runtime body and invocation', (
     assert.throws(() => checkRecognitionRuntime(root), /Additional runtime invocation/);
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
+
+for (const extension of ['cjs','js','cts','ts','jsx','tsx']) test(`scoped gate scans ${extension} helpers for an extra runtime invocation`, () => {
+ const root=mkdtempSync(join(tmpdir(),'recognition-extension-'));
+ try {
+  for (const dir of ['packages/foreign-revenue-core','plugins/live-agency-domain']) mkdirSync(join(root,dir),{recursive:true});
+  const helper=join(root,`packages/foreign-revenue-core/helper.${extension}`);
+  writeFileSync(helper,"spawnSync('python3')");
+  assert.throws(()=>checkRecognitionRuntime(root),/Additional runtime invocation/);
+ } finally { rmSync(root,{recursive:true,force:true}); }
+});
