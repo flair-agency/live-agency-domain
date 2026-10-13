@@ -6,6 +6,19 @@ Before editing, check the source status and the affected contract. Keep unrelate
 
 Public proposals and checks must use publishable inputs. Do not add private documents, credentials, real data, selected resource identifiers, or publication-uncertain source interpretations. A public contribution does not select a production environment or authorize service access. Protected effects require an explicitly selected actor, target, operation, and applicable approval through the owning workflow.
 
+# Execution and distribution basis
+
+Owner-approved policy content, 2026-10-13.
+
+Align implementations, tests and development helpers (including temporary and inline scripts) with the adopted execution and distribution basis. For the selected Node.js targets, write new source as typed, erasable TypeScript in .mts files; use the locked type checker and supported native Node execution. Standard compiler-emitted JavaScript for npm dependencies is a distribution artifact, not a second runtime. Existing source is not subject to automatic conversion.
+
+Adding an execution runtime is an architecture decision whether introduced through new code, copied or redistributed existing code, a dependency, a wrapper, a subprocess or a development helper. An existing implementation, available interpreter or contributor familiarity does not establish adoption. Before adding a runtime outside the selected basis, record the required capability, why the adopted basis and alternatives are insufficient, affected scope, execution/distribution path, dependencies, verification and maintenance costs, and obtain explicit owner adoption through the applicable governance procedure. Approval for an unchanged existing scope does not clear a new distribution or execution scope. Do not add a runtime while that decision is missing.
+
+
+For a migration or extraction, inspect the affected execution path and delivered files for inherited runtimes, transitive dependencies, implicit environment/configuration assumptions and legacy route fallbacks. Identify each retained dependency and its justified role under the new basis. Prior execution success is compatibility evidence, not adoption of the new composition. Bound the inspection to the changed paths and record omitted scope; do not turn it into an unrelated repository-wide migration.
+
+Record runtime identity and focused positive/negative checks for the affected artifact. Review implementation source, dependency manifests and entry paths against this rule. Architecture Gatekeeper assesses the submitted change against protected-base authority; passing tests or candidate policy cannot adopt its own exception. Repository checks cover their declared artifact paths, and neither those checks nor AGK monitor all local developer commands. Record any temporary/helper execution outside submitted source in the task evidence; do not claim it was observed by AGK.
+
 # Technical review assignments
 
 The repository owner owns this public repository's technical review assignments and canonical adoption decisions as company-specific governance under the existing [organization ownership boundary](../architecture/ownership.md). The reviewer teams below provide technical assessment in their assigned scopes; a review assignment or team approval does not itself make a proposal canonical. Actual integration remains subject to existing repository permissions, required checks and applicable owner approval. Business, platform and disclosure decisions retain their existing owners.
