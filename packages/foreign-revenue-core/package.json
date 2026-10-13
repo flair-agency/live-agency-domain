@@ -1,0 +1,8 @@
+{
+  "name": "@flair-agency/foreign-revenue-core", "version": "0.2.0", "private": true,
+  "type": "module", "license": "MIT", "engines": { "node": ">=22.22.0" },
+  "exports": { ".": { "types": "./dist/index.d.mts", "import": "./dist/index.mjs" } },
+  "files": ["dist", "python", "LICENSE", "README.md"],
+  "scripts": { "build": "tsc -p tsconfig.build.json", "test": "node --test test/*.test.mts" },
+  "repository": { "type": "git", "url": "https://github.com/flair-agency/live-agency-domain.git", "directory": "packages/foreign-revenue-core" }
+}

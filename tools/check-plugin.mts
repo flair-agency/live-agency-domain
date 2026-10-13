@@ -10,6 +10,10 @@ const copies: ReadonlyArray<readonly [source: string, target: string]> = [
   ['docs/domain/contexts.md', 'skills/domain-guide/references/contexts.md'],
   ['docs/architecture/ownership.md', 'skills/domain-guide/references/ownership.md'],
   ['LICENSE', 'LICENSE'],
+  ['packages/foreign-revenue-core/src/index.mts', 'shared/foreign-revenue-core/src/index.mts'],
+  ['packages/foreign-revenue-core/python/plan_foreign_revenue.py', 'shared/foreign-revenue-core/python/plan_foreign_revenue.py'],
+  ['packages/foreign-revenue-core/LICENSE', 'shared/foreign-revenue-core/LICENSE'],
+  ['packages/foreign-revenue-core/README.md', 'shared/foreign-revenue-core/README.md'],
 ];
 assert(process.argv.length === 2 || (process.argv.length === 3 && process.argv[2] === '--sync'), 'Use check-plugin.mts [--sync]');
 if (process.argv[2] === '--sync') {
@@ -61,13 +65,17 @@ assert(typeof entrySource.path === 'string');
 assert.equal(resolve(root, entrySource.path), plugin);
 assert.deepEqual(entry.policy, { installation: 'AVAILABLE', authentication: 'ON_INSTALL' });
 assert.equal(entry.category, 'Productivity');
-assert.deepEqual(readdirSync(join(plugin, 'skills')), ['domain-guide']);
+assert.deepEqual(readdirSync(join(plugin, 'skills')), ['domain-guide', 'live-agency-foreign-currency-revenue-recognize']);
 const instructions = readFileSync(join(skill, 'SKILL.md'), 'utf8');
 assert.match(instructions, /^---\nname: domain-guide\ndescription: [^\n]+\n---\n/);
 for (const [source, target] of copies) {
   assert(readFileSync(join(plugin, target)).equals(readFileSync(join(root, source))), `Distribution copy drift: ${target}`);
 }
-const allowed = new Set(['plugin.json', 'LICENSE', 'skills/domain-guide/SKILL.md', ...copies.map(([, target]) => target)]);
+const allowed = new Set(['plugin.json', 'LICENSE', 'skills/domain-guide/SKILL.md',
+  'skills/live-agency-foreign-currency-revenue-recognize/SKILL.md',
+  'skills/live-agency-foreign-currency-revenue-recognize/references/normalized-contracts.md',
+  'skills/live-agency-foreign-currency-revenue-recognize/scripts/plan.mts',
+  ...copies.map(([, target]) => target)]);
 function inspect(directory: string, prefix = ''): void {
   for (const name of readdirSync(directory)) {
     const relative = prefix + name;

@@ -36,6 +36,11 @@ jobs:
         run: node tools/check-plugin.mts
       - name: Verify plugin sync safety and path containment regressions
         run: node --test tools/check-plugin.test.mts
+      - name: Verify recognition calculations and build the archive component
+        run: |
+          python3 --version
+          node --test packages/foreign-revenue-core/test/planner.test.mts
+          npm run build --prefix packages/foreign-revenue-core
 
   source-windows:
     runs-on: windows-latest
