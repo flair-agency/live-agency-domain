@@ -1,18 +1,18 @@
 ---
 type: architecture
-status: pending
+status: commit
 date: 2026-10-13
-author: "Codex (local reconciliation draft)"
-context: "Public wording candidate derived from adopted responsibilities; not adopted or approved for publication"
+author: "Naoki KIMURA (owner adoption); Codex (prepared text)"
+context: "Owner-approved wording; normal integration and review-input verification are separate acceptance steps"
 ---
 
 # Clean v2 architecture overview
 
-This local candidate is an index and bounded responsibility statement. It is not canonical authority, a selected execution composition, or publication permission. The companion [clean-v2 baseline](../requirements/clean-v2-baseline.md) is also a candidate. Source and disclosure reconciliation are retained outside the public candidate.
+The proposed canonical location is `flair-agency/live-agency-domain`, branch `main`, path `docs/architecture/overview.md`. Work-branch versions remain proposals; they take effect only through owner adoption of the exact content and normal integration under the predecessor's review conditions. The authorized publication of the preceding Draft is not adoption of this package. Work-branch text and the proposed authority registration cannot supply authority for their own review. The [clean-v2 baseline](../requirements/clean-v2-baseline.md) has the same integration boundary. Source and disclosure reconciliation are retained outside public source.
 
 # Meaning and execution
 
-LIVE Agency distinguishes [Creator Scouting, Creator Management, and Expense and Accounting](https://github.com/flair-agency/live-agency-domain/blob/de01aac5f82260ed1c7436ba0ed5ab9c21388950/docs/domain/contexts.md). Each context retains its business facts and authority. Observations, agency judgments, operational estimates, and accounting records are different kinds of information.
+LIVE Agency distinguishes [Creator Scouting, Creator Management, and Expense and Accounting](../domain/contexts.md). Each context retains its business facts and authority. Observations, agency judgments, operational estimates, and accounting records are different kinds of information.
 
 Start a Skill from an agency use case: its intended outcome, neutral facts, decisions, completion conditions, safe stops, and human takeover. Then identify the capabilities needed to realize that use case. An available API, screen, tool, or existing implementation does not define the business workflow.
 
@@ -31,7 +31,7 @@ These are semantic responsibilities. They do not require one repository, package
 
 Three descriptions remain distinct: a logical business schema describes facts and invariants; a service mapping describes their representation in a service; a selected resource binding identifies the actual resources and credential references. Reading service metadata does not establish business meaning or select an execution binding.
 
-The adopted public [ownership boundary](https://github.com/flair-agency/live-agency-domain/blob/de01aac5f82260ed1c7436ba0ed5ab9c21388950/docs/architecture/ownership.md) owns disclosure and private-owner separation. This index does not create another private mapping or publish private companion sources.
+The public [ownership boundary](ownership.md) owns disclosure and private-owner separation. This index does not create another private mapping or publish private companion sources.
 
 # Execution and distribution
 
@@ -45,11 +45,11 @@ Development evidence from Codex and production evidence from the selected local 
 
 Plugin/MCP is a candidate host boundary. Transfer a discovery, installation, invocation, authentication or execution-state responsibility only when evidence for the selected host/version and a reviewed contract identifies what replaces, retains or defers it. Do not copy an old Runtime or implement a second resolver/catalog merely because either is available.
 
-The existing [artifact-specific distribution guide](https://github.com/flair-agency/live-agency-domain/blob/de01aac5f82260ed1c7436ba0ed5ab9c21388950/docs/architecture/plugin-distribution.md) records its own procedure and limits. It is not the general execution design or proof that a business Skill has completed.
+The existing [artifact-specific distribution guide](plugin-distribution.md) records its own procedure and limits. It is not the general execution design or proof that a business Skill has completed.
 
 # Release and acceptance boundary
 
-Clean v2 reconstructs from adopted current requirements and verified knowledge. Legacy code, APIs, internal shapes, package graphs, fixtures, golden hashes and deployment history do not define the target. The [candidate baseline](../requirements/clean-v2-baseline.md) separates business contract, component conformance, selected-environment integration and production acceptance.
+Clean v2 reconstructs from adopted current requirements and verified knowledge. Legacy code, APIs, internal shapes, package graphs, fixtures, golden hashes and deployment history do not define the target. The [clean-v2 baseline](../requirements/clean-v2-baseline.md) separates business contract, component conformance, selected-environment integration and production acceptance.
 
 The release goal is justified ownership and source/package placement, an operable selected composition, and at least one owner-selected Skill completing its bounded production outcome through that architecture. Complete migration of all old workflows or repositories is not a prerequisite.
 
@@ -57,9 +57,9 @@ The release goal is justified ownership and source/package placement, an operabl
 
 Architecture review is read-only semantic assessment: responsibility, authority, capability surface, dependency direction, minimality, scope and replaceability. Its temporary clean-v2 overlay checks the reconstruction baseline and legacy contamination. Explicit local review and protected PR review serve different checkpoints; automatic prompt hooks are not part of the adopted control.
 
-The consumer owns its selected authority, review policy and decision contract. A shared reviewer mechanism does not own the consumer's architecture. A successful review is architecture evidence; it does not grant disclosure, publication, installation, credentials, activation or business-operation authority. Follow the adopted [contributor and adoption guidance](https://github.com/flair-agency/live-agency-domain/blob/de01aac5f82260ed1c7436ba0ed5ab9c21388950/docs/governance/contributing.md).
+The consumer owns its selected authority, review policy and decision contract. A shared reviewer mechanism does not own the consumer's architecture. A successful review is architecture evidence; it does not grant disclosure, publication, installation, credentials, activation or business-operation authority. Apply the [contributor and adoption guidance](../governance/contributing.md) at the selected authority revision.
 
-This candidate is not a selected AGK member. References from an index do not themselves prove that a required document was materialized and applied by the reviewer.
+Required AGK input comes from the consumer's adopted manifest. When this document and the clean-v2 baseline are selected, they supplement the existing business-contexts, ownership and contributor-guidance members. They govern only reviews whose adopted predecessor selects them. References from an index do not themselves prove that a required document was materialized and applied by the reviewer.
 
 # Decisions that remain open
 
@@ -67,8 +67,7 @@ This candidate is not a selected AGK member. References from an index do not the
 | --- | --- |
 | Exact Work execution/composition owner and mechanism | Identify retained, replaced and deferred responsibilities under a separately reviewed selected route. |
 | Concrete package names, count and graph for that route | Derive them from the selected responsibilities and dependencies, not old layout or semantic arrows. |
-| Business pilot and operational binding | Select its current business contract, versions, actor, resources, permitted operations and acceptance scope. |
+| Production workflow and operational binding | Select its current business contract, versions, actor, resources, permitted operations and acceptance scope. |
 | Additional source and history publication | Review exact content and rights; a previously approved initial artifact does not clear later Skills or history. |
-| Selection of these candidate documents into AGK | Complete ordinary content/adoption and explicit predecessor-governed authority selection; do not self-select from the candidate. |
 
 Open questions stop their affected selection or effect. They do not restore legacy implementation as the specification or imply that the entire project must wait for every historical migration task.

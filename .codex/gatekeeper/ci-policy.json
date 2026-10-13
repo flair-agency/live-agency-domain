@@ -11,7 +11,7 @@
       "authorityManifestPath": ".codex/gatekeeper/authorities.json",
       "authorityLimits": {
         "maxManifestBytes": 16384,
-        "maxMembers": 3,
+        "maxMembers": 5,
         "maxFileBytes": 131072,
         "maxTotalBytes": 262144,
         "maxPromptBytes": 524288

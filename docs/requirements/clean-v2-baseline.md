@@ -1,14 +1,14 @@
 ---
 type: requirements
-status: pending
+status: commit
 date: 2026-10-13
-author: "Codex (local reconciliation draft)"
-context: "Public wording candidate for clean reconstruction and acceptance; not adopted or approved for publication"
+author: "Naoki KIMURA (owner adoption); Codex (prepared text)"
+context: "Owner-approved wording; normal integration and review-input verification are separate acceptance steps"
 ---
 
 # Clean v2 reconstruction and acceptance baseline
 
-This local candidate states common reconstruction and acceptance principles. It is not canonical authority or a selected AGK input. The [candidate architecture index](../architecture/overview.md) locates responsibility boundaries; existing public [contexts](https://github.com/flair-agency/live-agency-domain/blob/de01aac5f82260ed1c7436ba0ed5ab9c21388950/docs/domain/contexts.md), [ownership](https://github.com/flair-agency/live-agency-domain/blob/de01aac5f82260ed1c7436ba0ed5ab9c21388950/docs/architecture/ownership.md) and [contributor guidance](https://github.com/flair-agency/live-agency-domain/blob/de01aac5f82260ed1c7436ba0ed5ab9c21388950/docs/governance/contributing.md) retain their own scopes.
+The proposed canonical location is `flair-agency/live-agency-domain`, branch `main`, path `docs/requirements/clean-v2-baseline.md`. Work-branch versions remain proposals; they take effect only through owner adoption of the exact content and normal integration under the predecessor's review conditions. The authorized publication of the preceding Draft is not adoption of this package. Work-branch text and the proposed authority registration cannot supply authority for their own review. The [architecture index](../architecture/overview.md) locates responsibility boundaries; [contexts](../domain/contexts.md), [ownership](../architecture/ownership.md) and [contributor guidance](../governance/contributing.md) retain their own scopes.
 
 # Clean reconstruction
 
