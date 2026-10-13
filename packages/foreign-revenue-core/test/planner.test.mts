@@ -66,3 +66,27 @@ test('public entry rejects malformed UTF-8 before invoice planning and hashing',
   assert.equal(result.status, 2); assert.equal(JSON.parse(result.stdout).status, 'invalid');
   assert.equal(JSON.parse(result.stdout).plan, undefined);
 });
+
+test('Unicode White_Space boundaries cannot produce distinct ready identities', () => {
+  const whitespace = ['\u0009', '\u000a', '\u000b', '\u000c', '\u000d', '\u0020', '\u0085', '\u00a0', '\u1680', '\u2000', '\u2001', '\u2002', '\u2003', '\u2004', '\u2005', '\u2006', '\u2007', '\u2008', '\u2009', '\u200a', '\u2028', '\u2029', '\u202f', '\u205f', '\u3000', '\ufeff'];
+  for (const padding of whitespace) for (const side of ['start', 'end']) {
+    for (const [section, field] of [['invoice', 'invoice_number'], ['invoice', 'source_profile_id'], ['destination', 'profile_id'], ['fx_rate', 'source_url']]) {
+      const x = input('recognition'), target = object(x[section!]), value = String(target[field!]);
+      target[field!] = side === 'start' ? padding + value : value + padding;
+      assert.equal(buildPlan('recognition', x).status, 'invalid', section + '.' + field + ':' + padding.codePointAt(0));
+    }
+  }
+});
+test('Unicode whitespace inside rate provenance is invalid', () => {
+  const x = input('recognition'); object(x.fx_rate).source_url = 'https://example.invalid/a\u0085b';
+  assert.equal(buildPlan('recognition', x).status, 'invalid');
+});
+
+test('verified previous-business-day assertions do not inherit an undocumented seven-day cap', () => {
+  const x = input('recognition'); object(x.fx_rate).rate_date = '2026-07-22';
+  assert.equal(buildPlan('recognition', x).status, 'ready');
+  object(x.fx_rate).policy_date_verified = false;
+  assert.equal(buildPlan('recognition', x).status, 'blocked');
+  object(x.fx_rate).rate_date = '2026-08-01';
+  assert.equal(buildPlan('recognition', x).status, 'invalid');
+});

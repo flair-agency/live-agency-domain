@@ -7,7 +7,7 @@ The business source is the existing public [recognition Skill](https://github.co
 | Candidate source | Recorded basis | Permitted content / exclusion |
 | --- | --- | --- |
 | TypeScript recognition implementation / Skill entry | Implements the fixed public normalized contract; preserved recognition golden outputs are checked without executing another runtime | Node date/URL validation, exact BigInt decimal arithmetic and SHA-256; no settlement code, acquisition, service fields, authorization or writes |
-| Normalized reference | Derived from the fixed public contract linked above | Recognition fields only; irrelevant settlement policy removed; syntax validation tightened for strings/URLs |
+| Normalized reference | Derived from the fixed public contract linked above | Recognition fields only; irrelevant settlement policy removed; syntax validation tightened for strings/URLs; no inherited seven-day calendar cap |
 | Fixtures | Recognition cases already present in the public Skill's synthetic legacy fixtures | Invented invoice/profile/rate data only; no operating evidence or private mappings |
 
 Disclosure and semantic ownership are assessed separately under the repository's ownership authority. The public preparation contains only the already-public recognition meaning and generic implementation of it, with MIT licensing retained. This record does not derive permission from an MIT label, abstraction or synthetic values alone: the recorded public business source and the owner-authorized common-calculation scope supply the basis. Exact source integration remains subject to normal review. Company policy selection, MF correspondence and physical actor/resource binding remain private and are not inferred here.

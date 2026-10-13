@@ -65,3 +65,5 @@ hash covers normalized input identity, destination profile version, dates,
 amounts, memo, and semantic debit/credit lines.
 
 This recognition-only extraction requires no settlement window or transfer-fee policy. Existing inputs carrying those unused fields remain accepted; no settlement entry is exposed. Normalized strings must have no surrounding whitespace. Rate source URLs require an HTTPS scheme and host without credential components. These checks validate syntax, not source verification.
+
+The caller asserts verification of the selected month-end/previous-business-day date under its policy. The calculator rejects a future date, requires that verification flag, and does not invent a fixed seven-day calendar limit. It does not verify a business calendar itself.

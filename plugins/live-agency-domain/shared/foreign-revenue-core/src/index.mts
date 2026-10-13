@@ -15,7 +15,7 @@ function object(value: unknown, name: string): ObjectValue {
 function string(value: unknown, name: string): string {
   if (typeof value !== 'string' || !value.trim()) throw new Error(`${name} must be a non-empty string`);
   if (/[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/.test(value)) throw new Error(`${name} must contain valid Unicode`);
-  if (value !== value.trim()) throw new Error(`${name} must not have surrounding whitespace`);
+  if (value !== value.trim() || /^\p{White_Space}|\p{White_Space}$/u.test(value)) throw new Error(`${name} must not have surrounding whitespace`);
   return value;
 }
 function integer(value: unknown, name: string, min = 0): number {
@@ -94,12 +94,12 @@ export function buildPlan(operation: string, payload: unknown): PlanResult {
     if (string(fx.currency_pair, 'fx_rate.currency_pair') !== pair) throw new Error(`fx_rate.currency_pair must be ${pair}`);
     const rate = decimal(fx.value, 'fx_rate.value'), rateDate = date(fx.rate_date, 'fx_rate.rate_date');
     const lag = (closing.getTime() - rateDate.getTime()) / 86400000;
-    if (lag < 0 || lag > 7) throw new Error('fx_rate.rate_date must be month-end or a recent prior date');
+    if (lag < 0) throw new Error('fx_rate.rate_date must not follow the revenue month end');
     if (fx.rate_type !== 'first_published_midpoint') throw new Error('fx_rate.rate_type must be first_published_midpoint');
     const sourceUrl = string(fx.source_url, 'fx_rate.source_url');
     try {
       const url = new URL(sourceUrl);
-      if (!/^https:\/\/[^/?#@\\]+(?:[/?#]|$)/.test(sourceUrl) || url.protocol !== 'https:' || !url.hostname || url.username || url.password || /\s/.test(sourceUrl)) throw new Error();
+      if (!/^https:\/\/[^/?#@\\]+(?:[/?#]|$)/.test(sourceUrl) || url.protocol !== 'https:' || !url.hostname || url.username || url.password || /[\p{White_Space}\uFEFF]/u.test(sourceUrl)) throw new Error();
     } catch { throw new Error('fx_rate.source_url must be a valid HTTPS URL with a host'); }
     if (!boolean(fx.source_verified, 'fx_rate.source_verified')) issues.push('official rate source was not verified');
     if (!boolean(fx.policy_date_verified, 'fx_rate.policy_date_verified')) issues.push('rate date was not verified against the month-end policy');
