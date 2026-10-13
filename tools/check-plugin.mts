@@ -11,7 +11,6 @@ const copies: ReadonlyArray<readonly [source: string, target: string]> = [
   ['docs/architecture/ownership.md', 'skills/domain-guide/references/ownership.md'],
   ['LICENSE', 'LICENSE'],
   ['packages/foreign-revenue-core/src/index.mts', 'shared/foreign-revenue-core/src/index.mts'],
-  ['packages/foreign-revenue-core/python/plan_foreign_revenue.py', 'shared/foreign-revenue-core/python/plan_foreign_revenue.py'],
   ['packages/foreign-revenue-core/LICENSE', 'shared/foreign-revenue-core/LICENSE'],
   ['packages/foreign-revenue-core/README.md', 'shared/foreign-revenue-core/README.md'],
 ];

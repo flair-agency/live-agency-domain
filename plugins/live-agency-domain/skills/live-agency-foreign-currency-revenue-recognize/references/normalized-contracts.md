@@ -34,8 +34,6 @@ Use UTF-8 JSON. Foreign amounts and rates are positive decimal strings; JPY amou
   "policy": {
     "non_business_month_end": "previous_business_day",
     "jpy_rounding": "half_up",
-    "settlement_window_business_days": 10,
-    "sender_pays_transfer_fee": true,
     "approval_required": true
   },
   "checks": {
@@ -65,3 +63,5 @@ Account roles such as `accounts_receivable`, `revenue`, `bank`, `fx_loss`, and
 `fx_gain` are resolved to stable destination IDs only after approval. The plan
 hash covers normalized input identity, destination profile version, dates,
 amounts, memo, and semantic debit/credit lines.
+
+This recognition-only extraction requires no settlement window or transfer-fee policy. Existing inputs carrying those unused fields remain accepted; no settlement entry is exposed. Normalized strings must have no surrounding whitespace. Rate source URLs require an HTTPS scheme and host without credential components. These checks validate syntax, not source verification.

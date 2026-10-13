@@ -33,12 +33,11 @@ jobs:
       - name: Check public source structure and links
         run: node tools/check-public-tree.mts
       - name: Check public knowledge plugin and packaged references
-        run: node tools/check-plugin.mts
+        run: node tools/check-plugin.mts && node tools/check-recognition-runtime.mts
       - name: Verify plugin sync safety and path containment regressions
-        run: node --test tools/check-plugin.test.mts
-      - name: Verify recognition calculations and build the archive component
+        run: node --test tools/*.test.mts
+      - name: Verify recognition calculations and build the package component
         run: |
-          python3 --version
           node --test packages/foreign-revenue-core/test/planner.test.mts
           npm run build --prefix packages/foreign-revenue-core
 
@@ -71,4 +70,5 @@ jobs:
         run: |
           node tools/check-public-tree.mts
           node tools/check-plugin.mts
+          node tools/check-recognition-runtime.mts
           node --test --test-name-pattern 'clean payload|containment|hard-linked' tools/check-plugin.test.mts
