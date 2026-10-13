@@ -101,6 +101,13 @@ test('provenance host requires a valid IP literal or well-formed DNS labels', ()
   assert.equal(buildPlan('recognition',x).status,'ready',host);
  }
 });
+for (const scheme of ['HTTPS', 'hTtPs']) test(`valid ${scheme} scheme preserves the submitted evidence URL`, () => {
+ const x=input('recognition'); object(x.fx_rate).source_url=scheme+'://example.invalid/rate';
+ const result=buildPlan('recognition',x);
+ assert.equal(result.status,'ready');
+ if (result.status==='ready') assert.equal(object(result.plan.rate).source_url,scheme+'://example.invalid/rate');
+});
+
 test('raw URL controls cannot silently become a different provenance URL', () => {
  const x=input('recognition'); object(x.fx_rate).source_url='https://example.invalid/a\u0000b';
  assert.equal(buildPlan('recognition',x).status,'invalid');
