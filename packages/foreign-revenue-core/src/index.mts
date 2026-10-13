@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { isIP } from 'node:net';
 export interface RecognitionPlan {
   operation: 'recognition'; destination_profile: { id: string; version: string };
   value_jpy: number; transaction_date: string; memo: string; [key: string]: unknown;
@@ -99,7 +100,12 @@ export function buildPlan(operation: string, payload: unknown): PlanResult {
     const sourceUrl = string(fx.source_url, 'fx_rate.source_url');
     try {
       const url = new URL(sourceUrl);
-      if (!/^https:\/\/[^/?#@\\]+(?:[/?#]|$)/.test(sourceUrl) || url.protocol !== 'https:' || !url.hostname || url.username || url.password || /[\p{White_Space}\uFEFF]/u.test(sourceUrl)) throw new Error();
+      const host = url.hostname;
+      const literal = host.startsWith('[') && host.endsWith(']') ? host.slice(1, -1) : host;
+      const dns = host.endsWith('.') ? host.slice(0, -1) : host;
+      const validHost = isIP(literal) !== 0 || (dns.length <= 253 && dns.split('.').every(label => /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/i.test(label)));
+      if (!validHost) throw new Error();
+      if (!/^https:\/\/[^/?#@\\]+(?:[/?#]|$)/.test(sourceUrl) || url.protocol !== 'https:' || !url.hostname || url.username || url.password || /[\u0000-\u0020\u007f\p{White_Space}\uFEFF]/u.test(sourceUrl)) throw new Error();
     } catch { throw new Error('fx_rate.source_url must be a valid HTTPS URL with a host'); }
     if (!boolean(fx.source_verified, 'fx_rate.source_verified')) issues.push('official rate source was not verified');
     if (!boolean(fx.policy_date_verified, 'fx_rate.policy_date_verified')) issues.push('rate date was not verified against the month-end policy');

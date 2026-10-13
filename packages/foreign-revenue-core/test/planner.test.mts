@@ -90,3 +90,18 @@ test('verified previous-business-day assertions do not inherit an undocumented s
   object(x.fx_rate).rate_date = '2026-08-01';
   assert.equal(buildPlan('recognition', x).status, 'invalid');
 });
+
+test('provenance host requires a valid IP literal or well-formed DNS labels', () => {
+ for (const host of ['.', '..', '-', '-bank.example', 'bank-.example', 'a..example', '_bank.example', 'a'.repeat(64)+'.example']) {
+  const x=input('recognition'); object(x.fx_rate).source_url='https://'+host+'/';
+  assert.equal(buildPlan('recognition',x).status,'invalid',host);
+ }
+ for (const host of ['example.invalid', 'example.invalid.', '127.0.0.1', '[::1]', '例え.example']) {
+  const x=input('recognition'); object(x.fx_rate).source_url='https://'+host+'/';
+  assert.equal(buildPlan('recognition',x).status,'ready',host);
+ }
+});
+test('raw URL controls cannot silently become a different provenance URL', () => {
+ const x=input('recognition'); object(x.fx_rate).source_url='https://example.invalid/a\u0000b';
+ assert.equal(buildPlan('recognition',x).status,'invalid');
+});
