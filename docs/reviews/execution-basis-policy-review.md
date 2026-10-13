@@ -1,6 +1,7 @@
 # Execution-basis policy content approval and placement record
 
 Status: owner-approved content; canonical placement pending. Date: 2026-10-13.
+Author: Codex working agent (AI self-review). Context: the owner-approved four-proposition execution-basis amendment; canonical placement and integration pending.
 
 The owner explicitly approved aligning new implementation, tests and development helpers with Node.js and typed .mts source; treating copying, redistribution, dependencies and wrappers as runtime-introduction decisions; requiring scoped necessity, alternatives and distribution, verification and maintenance costs for exceptions; and refusing to infer new composition adoption from legacy execution success or earlier approval. Bulk conversion of existing source is outside this scope.
 
