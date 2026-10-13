@@ -19,7 +19,7 @@ function fixture(t: TestContext): Fixture {
   t.after(() => rmSync(temporary, { recursive: true, force: true }));
   const root = path.join(temporary, 'repo');
   mkdirSync(root);
-  for (const name of ['tools', 'docs', 'plugins', '.agents', 'LICENSE']) {
+  for (const name of ['tools', 'docs', 'plugins', 'packages', '.agents', 'LICENSE']) {
     cpSync(path.join(source, name), path.join(root, name), { recursive: true });
   }
   const run = (sync = false) => spawnSync(process.execPath, ['tools/check-plugin.mts', ...(sync ? ['--sync'] : [])], { cwd: root, encoding: 'utf8' });
