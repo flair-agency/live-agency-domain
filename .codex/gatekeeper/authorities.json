@@ -18,6 +18,18 @@
       "repository": "self",
       "revision": "authority-revision",
       "path": "docs/governance/contributing.md"
+    },
+    {
+      "id": "clean-v2-architecture",
+      "repository": "self",
+      "revision": "authority-revision",
+      "path": "docs/architecture/overview.md"
+    },
+    {
+      "id": "clean-v2-baseline",
+      "repository": "self",
+      "revision": "authority-revision",
+      "path": "docs/requirements/clean-v2-baseline.md"
     }
   ]
 }
