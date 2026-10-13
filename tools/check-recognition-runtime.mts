@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, relative } from 'node:path';
 /** Scoped distribution check, not monitoring of local commands or unrelated legacy components. */
 export function checkRecognitionRuntime(root: string): void {
   for (const folder of ['packages/foreign-revenue-core', 'plugins/live-agency-domain']) {
@@ -11,8 +11,12 @@ export function checkRecognitionRuntime(root: string): void {
         if (item.isDirectory()) visit(path);
         else {
           assert(!/\.(?:py|pyc|pyo|sh)$/.test(item.name), `Additional runtime file: ${path}`);
+          assert(/\.(?:mts|cts|ts|tsx|mjs|cjs|js|jsx|json|md)$/.test(item.name) || ['LICENSE','NOTICE'].includes(item.name), `Unsupported scoped artifact file: ${path}`);
           if (/\.(?:mts|cts|ts|tsx|mjs|cjs|js|jsx|json)$/.test(item.name)) {
-            assert(!/\bpython(?:3)?\b|plan_foreign_revenue\.py/.test(readFileSync(path, 'utf8')), `Additional runtime invocation/dependency: ${path}`);
+            const source=readFileSync(path, 'utf8');
+            assert(!/\bpython(?:3)?\b|plan_foreign_revenue\.py/.test(source), `Additional runtime invocation/dependency: ${path}`);
+            const implementation = !relative(join(root,folder),path).split(/[\\/]/).includes('test') && /\.(?:mts|cts|ts|tsx|mjs|cjs|js|jsx)$/.test(item.name);
+            if (implementation) assert(!/\bchild_process\b|\b(?:Deno|Bun)\b/.test(source), `Scoped calculation and Plugin entries cannot add subprocess/runtime access: ${path}`);
           }
         }
       }

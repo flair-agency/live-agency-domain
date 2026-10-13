@@ -10,6 +10,9 @@ try {
  const expected=['index.d.mts','index.mjs'];
  assert.deepEqual(readdirSync(output).sort(),expected);
  assert.deepEqual(readdirSync(join(root,'packages/foreign-revenue-core/dist')).sort(),expected);
- for(const file of expected) assert.ok(readFileSync(join(output,file)).equals(readFileSync(join(root,'packages/foreign-revenue-core/dist',file))),`Committed build differs from typed source: ${file}`);
+ for(const file of expected) {
+  const committed=execFileSync('git',['show',':packages/foreign-revenue-core/dist/'+file],{cwd:root});
+  assert.ok(readFileSync(join(output,file)).equals(committed),`Indexed build differs from typed source: ${file}`);
+ }
  console.log('Committed core JavaScript/declarations match the locked compiler output.');
 } finally {rmSync(output,{recursive:true,force:true});}
