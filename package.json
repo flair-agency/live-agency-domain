@@ -9,7 +9,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "test": "node --test tools/*.test.mts packages/foreign-revenue-core/test/*.test.mts",
-    "check": "node tools/check-public-tree.mts && node tools/check-plugin.mts && node tools/check-recognition-runtime.mts"
+    "check": "node tools/check-public-tree.mts && node tools/check-plugin.mts && node tools/check-recognition-runtime.mts && node tools/check-core-build.mts"
   },
   "devDependencies": {
     "@types/node": "22.20.5",
