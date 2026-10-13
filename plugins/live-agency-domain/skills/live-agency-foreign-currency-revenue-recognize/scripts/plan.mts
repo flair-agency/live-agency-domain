@@ -9,7 +9,7 @@ try {
     if (bytes > 1024 * 1024) throw new Error('bounded input');
     chunks.push(chunk);
   }
-  const input: unknown = JSON.parse(Buffer.concat(chunks).toString('utf8'));
+  const input: unknown = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(Buffer.concat(chunks)));
   result = buildPlan('recognition', input);
 } catch {
   process.stdin.destroy();

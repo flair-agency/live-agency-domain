@@ -57,3 +57,12 @@ test('rate provenance requires a syntactically valid HTTPS host', () => {
     assert.equal(buildPlan('recognition', x).status, 'invalid');
   }
 });
+
+test('public entry rejects malformed UTF-8 before invoice planning and hashing', () => {
+  const cli = fileURLToPath(new URL('../../../plugins/live-agency-domain/skills/live-agency-foreign-currency-revenue-recognize/scripts/plan.mts', import.meta.url));
+  const bytes = Buffer.from(JSON.stringify(input('recognition')));
+  const offset = bytes.indexOf(Buffer.from('SYNTH-2026-07')); assert.ok(offset >= 0); bytes[offset] = 0xff;
+  const result = spawnSync(process.execPath, [cli], { input: bytes, encoding: 'utf8' });
+  assert.equal(result.status, 2); assert.equal(JSON.parse(result.stdout).status, 'invalid');
+  assert.equal(JSON.parse(result.stdout).plan, undefined);
+});
